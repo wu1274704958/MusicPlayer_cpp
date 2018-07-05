@@ -79,6 +79,8 @@ bool MMPlayer::isSupport(const char *s) const
     return false;
 }
 
+void gotoxy(int x, int y);
+
 int MMPlayer::printList()
 {
     if(_stack.empty())
@@ -86,7 +88,7 @@ int MMPlayer::printList()
         return -1;
     }
     std::vector<MMFile> *v = _stack.top();
-
+	gotoxy(0, 0);
     for(int i = 0;i < v->size();i++)
     {
         std::cout << i+1 << ". "<< v->operator[](i).getName()<<std::endl;
@@ -121,7 +123,7 @@ void MMPlayer::main_loop()
 			std::string str(_stack.top()->operator[](index - 1).getAbsolutePath());
 			str += "\\*.*";
             GetFileName::getFileName(*v,str.c_str(),this);
-            _stack.push(v);
+            _stack.push(std::move(v));
 			lastIndex = 1;
             continue;
         }
@@ -179,6 +181,28 @@ int MMPlayer::getNextIndex()
 	return index;
 }
 
+void gotoxy(int x, int y)
+{
+	auto std_h = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleCursorPosition(std_h, COORD{ (short)x,(short)y });
+}
+
+DWORD print(const char *s, unsigned int len)
+{
+	auto std_h = GetStdHandle(STD_OUTPUT_HANDLE);
+	DWORD res = 0;
+	WriteConsoleA(std_h, s, len, &res, NULL);
+	return res;
+}
+
+char CLS_BUF[8000] = { ' ' };
+
+void cls() {
+	gotoxy(0, 0);
+	print(CLS_BUF, 8000);
+}
+
+
 void MMPlayer::playMusic(int index)
 {
     stop();
@@ -234,8 +258,8 @@ void MMPlayer::playMusic(int index)
 		
         BASS_ChannelGetData(chan, fft, BASS_DATA_FFT256);
 		
-        system("cls");
-		
+		//cls();
+		gotoxy(0, 0);
 		
 
 		pfft->printFFT(fft, 128);

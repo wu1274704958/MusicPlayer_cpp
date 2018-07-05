@@ -13,6 +13,9 @@ PrintFFT::PrintFFT()
 
     data = new int[128];
     data_len = 128;
+	for (int i = 0; i < data_len; ++i) {
+		data[i] = 0;
+	}
 }
 
 PrintFFT::PrintFFT(const PrintFFT &pf)
@@ -78,7 +81,7 @@ void PrintFFT::init_data()
             data_print[i] = '\n';
             continue;
         }
-        data_print[i] = ' ';
+		data_print[i] = ' ';
     }
     data_print[60 * 129] = '\0';
 }
@@ -86,25 +89,24 @@ void PrintFFT::init_data()
 void PrintFFT::printFFT(float *fft, int len)
 {
 	init_data();
-
-    for (int i = 0; i < 128; i++)
+	
+    for (int i = 0; i < 128; ++i)
     {
         float hh = 0;
-        for (int j = 0; j < 8; j++)
-        {
-            hh += fft[(8 * i) + j];
-        }
-        float hhh = 2.0f * sqrtf((hh / 8.0f) * 4000.0f);
+        
+        hh = fft[i];
+        
+        hh = 2.0f * sqrtf(hh * 4000.0f);
 
-        int d = (int)round(hhh);
-        d < data[i] ? data[i]-- : data[i] = d;
+        //int d = (int)round(hh);
+		data[i] = (int)round(hh);
+        //d < data[i] ? data[i]-- : data[i] = d;
 
 
-		int mrow = 59;
-		for (int n = 0; n < (data[i] > 60 ? 60 : data[i]); n++)
+		unsigned int val = 60 - (data[i] > 60 ? 60 : data[i]);
+		for (int n = 59; n >= val; --n)
 		{
-			data_print[mrow * 129 + i] = '#';
-			mrow--;
+			data_print[n * 129 + i] = '#';
 		}
     }
 
