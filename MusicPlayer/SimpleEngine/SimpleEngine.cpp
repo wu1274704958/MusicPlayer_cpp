@@ -12,8 +12,8 @@ bool SimpleEngine::_isError = false;
 
 SimpleEngine::SimpleEngine(int arge, char **argv)
 {
-	WIDTH = 1300;
-	HEIGHT = 700;
+	WIDTH = 800;
+	HEIGHT = 600;
 
 	program = 0;
 	vposition = 0;
@@ -25,6 +25,7 @@ SimpleEngine::SimpleEngine(int arge, char **argv)
 	glutInitDisplayMode( GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowSize(WIDTH, HEIGHT);
 	glutInitContextProfile(GLUT_CORE_PROFILE);
+	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 	glutCreateWindow("SEPrintFFT");
 
 	if (glewInit())
@@ -55,6 +56,7 @@ void SimpleEngine::freeSimpleEngine()
 		delete _se;
 		_se = nullptr;
 	}
+	printf("clean up SimpleEngine ...\n");
 }
 
 SimpleEngine *SimpleEngine::getInstance()

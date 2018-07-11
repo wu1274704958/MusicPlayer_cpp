@@ -159,7 +159,7 @@ SEPrintFFT::~SEPrintFFT()
 	CloseHandle(hand);
 	CloseHandle(mutexHand);
 	
-	
+	printf("clean up SEPrintFFT...\n");
 }
 
 
@@ -186,7 +186,7 @@ inline void SEPrintFFT::init_data()
 	}
 }
 
-void SEPrintFFT::printFFT(float *fft, int len)
+void SEPrintFFT::printFFT(float *fft, int len, float l, float h)
 {
 	for (int i = 12; i < 128; i++)
 	{
@@ -198,18 +198,16 @@ void SEPrintFFT::printFFT(float *fft, int len)
 		WaitForSingleObject(mutexHand, INFINITE);
 		
 
-		sseV[i]->scale(glm::vec3(t,t, 1.0f));
+		sseV[i]->scale(glm::vec3(t,t, l * 3.0f));
 
 		ReleaseMutex(mutexHand);
 		
 		if(sseV[i + 128]->isVisible)
 		{ 
 			WaitForSingleObject(mutexHand, INFINITE);
-			sseV[i+128]->scale(glm::vec3(t, t, 1.0f ));
+			sseV[i+128]->scale(glm::vec3(t, t, h * 3.0f));
 			ReleaseMutex(mutexHand);
 		}
-		
-		
 	}
 
 }
@@ -217,7 +215,7 @@ void SEPrintFFT::printFFT(float *fft, int len)
 
 void reSize(int w, int h)
 {
-	glViewport(0, 0, 1300, 700);
+	glViewport(0, 0, 800, 600);
 }
 
 void destory()
@@ -260,7 +258,7 @@ void display()
 void update(int value)
 {
 	glutPostRedisplay();
-	glutTimerFunc(33, update, 1);
+	glutTimerFunc(30, update, 1);
 }
 
 
@@ -276,14 +274,14 @@ DWORD  WINAPI ThreadProc(LPVOID lp) {
 
 	GLfloat v1[] = {
 		//0.0f,0.0f,0.0f,
-		0.0f,-0.1f,0.0f,
-		0.0f,-0.2f,-0.02f,
-		0.0f,-0.3f,-0.04f,
-		0.007f,-0.43f,-0.07f,
-		-0.007f,-0.43f,-0.07f,
-		0.0f,-0.58f,-0.10f,
-		0.02f,-0.58f,-0.10f,
-		-0.02f,-0.58f,-0.10f
+		0.0f,0.1f,0.0f,
+		0.0f,0.2f,-0.02f,
+		0.0f,0.3f,-0.04f,
+		0.007f,0.43f,-0.07f,
+		-0.007f,0.43f,-0.07f,
+		0.0f,0.58f,-0.10f,
+		0.02f,0.58f,-0.10f,
+		-0.02f,0.58f,-0.10f
 	};
 
 	GLfloat v2[] = {

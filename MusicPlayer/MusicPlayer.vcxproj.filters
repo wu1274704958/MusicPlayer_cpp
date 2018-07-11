@@ -24,9 +24,6 @@
     <ClInclude Include="MMPlayer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="PrintFFT.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="SimpleEngine\LoadShaders.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -45,6 +42,12 @@
     <ClInclude Include="SimpleEngine\MeshVAO.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CMDPrintFFT.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PrintFFT.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GetFileName.cpp">
@@ -57,9 +60,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MMPlayer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="PrintFFT.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SimpleEngine\LoadShaders.cpp">
@@ -75,6 +75,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SimpleEngine\MeshManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CMDPrintFFT.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

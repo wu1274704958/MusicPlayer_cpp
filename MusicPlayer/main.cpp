@@ -7,9 +7,11 @@
 
 int main(int argc,char **argv)
 {
-    MMPlayer player(argc,argv);
-    player.main_loop();
-
+	{
+		MMPlayer player(argc, argv);
+		player.main_loop();
+	}
+	system("pause");
 
     /*BASS_Init(-1, 44100, 0, NULL, NULL);
 

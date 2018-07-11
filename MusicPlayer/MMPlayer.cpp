@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "SEPrintFFT.h"
+#include "CMDPrintFFT.h"
 
 
 
@@ -45,13 +46,13 @@ MMPlayer::MMPlayer(int argc, char **argv)
 	switch (*(argv + 2)[0])
 	{
 	case 'C':
-		pfft = new PrintFFT();
+		pfft = new CMDPrintFFT();
 		break;
 	case 'G':
 		pfft = new SEPrintFFT();
 		break;
 	default:
-		pfft = new PrintFFT();
+		pfft = new CMDPrintFFT();
 		break;
 	}
 }
@@ -80,6 +81,28 @@ bool MMPlayer::isSupport(const char *s) const
 }
 
 void gotoxy(int x, int y);
+#define CLS printf( "                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					"                                                                       \n"  \
+					)
 
 int MMPlayer::printList()
 {
@@ -88,7 +111,11 @@ int MMPlayer::printList()
         return -1;
     }
     std::vector<MMFile> *v = _stack.top();
+	
 	gotoxy(0, 0);
+	CLS;
+	gotoxy(0, 0);
+	
     for(int i = 0;i < v->size();i++)
     {
         std::cout << i+1 << ". "<< v->operator[](i).getName()<<std::endl;
@@ -261,8 +288,15 @@ void MMPlayer::playMusic(int index)
 		//cls();
 		gotoxy(0, 0);
 		
-
-		pfft->printFFT(fft, 128);
+		float l = 0.5f, h = 0.5f;
+		DWORD level = BASS_ChannelGetLevel(chan);
+		for (int a = 27204; a > 200; a = a * 2 / 3) {
+			if (LOWORD(level) >= a) l += 0.05f;
+		}
+		for (int a = 210; a<32768; a = a * 3 / 2) {
+			if (LOWORD(level) >= a) h += 0.05f;
+		}
+		pfft->printFFT(fft, 128,l,h);
 		
 		//std::cout << nextPattern << "  "<< allow_jump <<std::endl;
 

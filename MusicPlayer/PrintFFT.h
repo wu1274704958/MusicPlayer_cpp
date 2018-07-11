@@ -1,32 +1,11 @@
-//
-// Created by wws on 17-7-19.
-//
+#ifndef PRINT_FFT_ABSTRACT
+#define PRINT_FFT_ABSTRACT
 
-#ifndef FIRST_PRINTFFT_H
-#define FIRST_PRINTFFT_H
-
-
-class PrintFFT {
-protected:
-    char *data_print;
-    int dp_len;
-    int *data;
-    int data_len;
-
-	virtual inline void init_data();
-
+class PrintFFT{
 public:
-    PrintFFT();
-    PrintFFT(const PrintFFT &pf);
-    PrintFFT(PrintFFT &&pf);
-    virtual ~PrintFFT();
-
-    
-    virtual void printFFT(float *fft,int len);
-
-    PrintFFT &operator=(PrintFFT &&pf);
-
+	virtual ~PrintFFT() {};
+	virtual void printFFT(float *fft, int len,float l,float h) = 0;
+	virtual void init_data() = 0;
 };
 
-
-#endif //FIRST_PRINTFFT_H
+#endif //PRINT_FFT_ABSTRACT

@@ -7,12 +7,11 @@ class SEPrintFFT : public PrintFFT
 {
 public:
 	SEPrintFFT();
-	virtual ~SEPrintFFT();
-
-	virtual void printFFT(float *fft, int len);
+	virtual ~SEPrintFFT() override;
+	virtual void printFFT(float *fft, int len, float l, float h) override;
 
 protected:
-	virtual inline void init_data();
+	virtual inline void init_data() override;
 };
 
 

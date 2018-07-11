@@ -130,6 +130,7 @@
     <ClInclude Include="GetFileName.h" />
     <ClInclude Include="MMFile.h" />
     <ClInclude Include="MMPlayer.h" />
+    <ClInclude Include="CMDPrintFFT.h" />
     <ClInclude Include="PrintFFT.h" />
     <ClInclude Include="SEPrintFFT.h" />
     <ClInclude Include="SimpleEngine\LoadShaders.h" />
@@ -143,7 +144,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MMFile.cpp" />
     <ClCompile Include="MMPlayer.cpp" />
-    <ClCompile Include="PrintFFT.cpp" />
+    <ClCompile Include="CMDPrintFFT.cpp" />
     <ClCompile Include="SEPrintFFT.cpp" />
     <ClCompile Include="SimpleEngine\LoadShaders.cpp" />
     <ClCompile Include="SimpleEngine\MeshManager.cpp" />
