@@ -188,28 +188,43 @@ inline void SEPrintFFT::init_data()
 
 void SEPrintFFT::printFFT(float *fft, int len, float l, float h)
 {
-	for (int i = 12; i < 128; i++)
+	for (int i = 0; i < 128; i++)
 	{
 		float hhh = sqrtf(fft[i]);
 
 		float t = YS[i] + hhh;
 		
 		
-		WaitForSingleObject(mutexHand, INFINITE);
-		
-
-		sseV[i]->scale(glm::vec3(t,t, l * 3.0f));
-
-		ReleaseMutex(mutexHand);
-		
-		if(sseV[i + 128]->isVisible)
-		{ 
+		if (i <= 11)
+		{
 			WaitForSingleObject(mutexHand, INFINITE);
-			sseV[i+128]->scale(glm::vec3(t, t, h * 3.0f));
+
+			sseV[i]->scale(glm::vec3(YS[i], YS[i], l * 3.0f));
+
 			ReleaseMutex(mutexHand);
+
+			if (sseV[i + 128]->isVisible)
+			{
+				WaitForSingleObject(mutexHand, INFINITE);
+				sseV[i + 128]->scale(glm::vec3(YS[i], YS[i], h * 3.0f));
+				ReleaseMutex(mutexHand);
+			}
+		}
+		else {
+			WaitForSingleObject(mutexHand, INFINITE);
+
+			sseV[i]->scale(glm::vec3(t, t, l * 3.0f));
+
+			ReleaseMutex(mutexHand);
+
+			if (sseV[i + 128]->isVisible)
+			{
+				WaitForSingleObject(mutexHand, INFINITE);
+				sseV[i + 128]->scale(glm::vec3(t, t, h * 3.0f));
+				ReleaseMutex(mutexHand);
+			}
 		}
 	}
-
 }
 
 
