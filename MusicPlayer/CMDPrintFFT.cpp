@@ -5,17 +5,18 @@
 #include "CMDPrintFFT.h"
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
 
 CMDPrintFFT::CMDPrintFFT()
 {
-    data_print = new char[60 * 129 + 1];
-    dp_len = 60 * 129 + 1;
+	visible_h = 60;
+	visible_w = 128;
+	dp_len = visible_h * (visible_w + 1) + 1;
+    data_print = new char[dp_len];
 
-    data = new int[128];
+    data = new short[128];
     data_len = 128;
-	for (int i = 0; i < data_len; ++i) {
-		data[i] = 0;
-	}
+	memset(data, 0, sizeof(short) * data_len);
 }
 /*
 CMDPrintFFT::CMDPrintFFT(const CMDPrintFFT &pf)
@@ -102,16 +103,23 @@ void CMDPrintFFT::printFFT(float *fft, int len, float l, float h)
         
         hh = 2.0f * sqrtf(hh * 4000.0f);
 
-        //int d = (int)round(hh);
-		data[i] = (int)round(hh);
-        //d < data[i] ? data[i]-- : data[i] = d;
+        short curr = (short)round(hh);
+		short floater_v = 0;
+		if (curr >= data[i] - 1)
+			floater_v = curr;
+		else
+			floater_v = data[i] - 1;
 
-
-		unsigned int val = 60 - (data[i] > 60 ? 60 : data[i]);
+		unsigned char val = 60 - (curr > 60 ? 60 : curr);
 		for (int n = 59; n >= val; --n)
-		{
+		{	
 			data_print[n * 129 + i] = '#';
 		}
+		val = 59 - (floater_v > 59 ? 59 : floater_v);
+		
+		data_print[val * 129 + i] = '_';
+
+		data[i] = floater_v;
     }
 
     printf("%s", data_print);

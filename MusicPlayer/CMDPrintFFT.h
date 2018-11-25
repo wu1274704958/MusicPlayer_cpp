@@ -11,8 +11,9 @@ class CMDPrintFFT : public PrintFFT {
 protected:
     char *data_print;
     int dp_len;
-    int *data;
+    short *data;
     int data_len;
+	short visible_w,visible_h;
 
 	virtual inline void init_data() override;
 
