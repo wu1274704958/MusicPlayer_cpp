@@ -117,7 +117,7 @@ void CMDPrintFFT::printFFT(float *fft, int len, float l, float h)
 		}
 		val = 59 - (floater_v > 59 ? 59 : floater_v);
 		
-		data_print[val * 129 + i] = '_';
+		data_print[val * 129 + i] = '*';
 
 		data[i] = floater_v;
     }
